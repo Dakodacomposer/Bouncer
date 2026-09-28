@@ -5,17 +5,22 @@ signal scored
 signal ball_at_rest
 
 var game_active: bool = false
-var platform_active: bool = false
 var waiting_for_rest: bool = false
 
 
 func _ready() -> void:
 	gravity_scale = RunManager.gravity_bonus
 
-func _on_body_entered(body: Node) -> void:
-	if body.name == "Platform" and game_active == true:
-		scored.emit()
 
+func _on_body_entered(body: Node) -> void:
+	if body.name == "Platform":
+		if waiting_for_rest:
+			linear_velocity = Vector2.ZERO
+			freeze = true
+			waiting_for_rest = false
+			ball_at_rest.emit()
+		elif game_active:
+			scored.emit()
 
 
 func _on_canvas_layer_game_started() -> void:
@@ -26,9 +31,3 @@ func _on_canvas_layer_game_started() -> void:
 func _on_canvas_layer_time_expired() -> void:
 	game_active = false
 	waiting_for_rest = true
-
-
-
-func _on_sleeping_state_changed() -> void:
-	if waiting_for_rest and sleeping:
-		ball_at_rest.emit()
