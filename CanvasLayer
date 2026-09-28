@@ -1,0 +1,46 @@
+extends CanvasLayer
+
+signal game_started
+signal time_expired
+
+
+func _ready() -> void:
+	$DefeatButton.hide()
+	$VictoryButton.hide()
+	$Timer.wait_time += RunManager.time_bonus
+	$GoalLabel.text = "Goal: " + str(RunManager.round_count * 20)
+
+
+func _process(_delta: float) -> void:
+	display_time()
+	
+	
+func display_time():
+	$TimeLabel.text = "Time: " + str(ceil($Timer.time_left))
+
+
+
+
+func _on_start_button_pressed() -> void:
+	$Timer.start()
+	$StartButton.hide()
+	game_started.emit()
+
+
+
+
+func _on_timer_timeout() -> void:
+	time_expired.emit()
+
+
+func _on_game_manager_result_ready(victory: bool) -> void:
+	if victory:
+		$VictoryButton.show()
+	else:
+		$DefeatButton.show()
+
+
+func _on_victory_button_pressed() -> void:
+	RunManager.round_count += 1
+	get_tree().change_scene_to_file("res://Scenes/selection_screen.tscn")
+	
