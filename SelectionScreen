@@ -1,0 +1,17 @@
+extends Control
+
+
+
+
+func _on_hand_force_pressed() -> void:
+	RunManager.hand_force_bonus += 100
+	get_tree().change_scene_to_file("res://Scenes/game.tscn")
+
+
+func _on_x_25_gravity_pressed() -> void:
+	RunManager.gravity_bonus *=.25
+	get_tree().change_scene_to_file("res://Scenes/game.tscn")
+
+func _on_seconds_pressed() -> void:
+	RunManager.time_bonus += 5.0
+	get_tree().change_scene_to_file("res://Scenes/game.tscn")
