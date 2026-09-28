@@ -1,0 +1,7 @@
+extends Node
+
+
+var hand_force_bonus: int = 0
+var time_bonus: float = 0.0
+var gravity_bonus: float =1.0
+var round_count: int = 1
