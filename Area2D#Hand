@@ -13,10 +13,10 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Ball" and hand_active == true:
 		body.apply_central_impulse(Vector2( 0, smack_force))
-		print ("smack")
+		
 	else:
 		hand_active = true
-		print ("hand turned on")
+		#print ("hand turned on")
 
 #TEMP SOLUTION
 func _on_canvas_layer_time_expired() -> void:
