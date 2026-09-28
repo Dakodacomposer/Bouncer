@@ -1,0 +1,23 @@
+extends Area2D
+
+#HAND
+var hand_active: bool = false
+
+@export var smack_force: float = 300.0
+
+
+func _ready() -> void:
+	smack_force += RunManager.hand_force_bonus
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.name == "Ball" and hand_active == true:
+		body.apply_central_impulse(Vector2( 0, smack_force))
+		print ("smack")
+	else:
+		hand_active = true
+		print ("hand turned on")
+
+#TEMP SOLUTION
+func _on_canvas_layer_time_expired() -> void:
+	queue_free()
